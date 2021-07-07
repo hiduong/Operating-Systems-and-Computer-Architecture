@@ -1,0 +1,8 @@
+arm-none-eabi-as -o ts.o ts.s #assembles ts.s to ts.o
+arm-none-eabi-ld -T t.ld -o t.elf ts.o # link ts.o to t.elf file
+arm-none-eabi-nm t.elf #show symbols in t.elf
+arm-none-eabi-objcopy -O binary t.elf t.bin #objcopy t.elf to t.bin
+
+qemu-system-arm -M versatilepb -kernel t.bin -nographic -serial /dev/null
+
+

@@ -1,0 +1,24 @@
+LIBPATH=/usr/lib/gcc/arm-none-eabi/4.9.3/
+
+# 1. What does the following statement do? Assembles assembly code ts.s into object code ts.o
+arm-none-eabi-as -mcpu=arm926ej-s -g ts.s -o ts.o
+
+# 2. What does the following statement do? Compiles c code t.c into object code t.o 
+arm-none-eabi-gcc -c -mcpu=arm926ej-s -g t.c -o t.o
+
+# 3. What does the following statement do? Links object files ts.o and t.o into a linkable and executable file t.elf
+arm-none-eabi-ld -T t.ld ts.o t.o -o t.elf
+
+# 4. What does the following statement do? Converts t.elf to t.bin
+arm-none-eabi-objcopy -O binary t.elf t.bin
+
+rm *.o *.elf
+
+echo ready to go?
+read dummy
+
+qemu-system-arm -M versatilepb -m 128M -kernel t.bin \
+-serial mon:stdio
+ 
+
+
